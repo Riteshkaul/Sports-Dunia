@@ -1,99 +1,108 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# College Management System  
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a backend application built using **NestJS** and **PostgreSQL** to manage and query college-related data. It demonstrates designing database relationships, handling complex queries, and deploying the application in a production-like environment.  
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Features  
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Colleges Management**  
+  - Manage colleges, their scores, and associations with cities and states.  
 
-## Project setup
+- **Placement Records**  
+  - View placement statistics for colleges, including averages, trends, and detailed records.  
 
-```bash
-$ npm install
-```
+- **Courses Offered**  
+  - Retrieve college-specific course information, sorted by course fees.  
 
-## Compile and run the project
+- **City and State Filtering**  
+  - Query colleges based on city or state.  
 
-```bash
-# development
-$ npm run start
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
+---
 
-## Run tests
+## Table of Contents  
 
-```bash
-# unit tests
-$ npm run test
+1. [Database Design](#database-design)  
+2. [API Endpoints](#api-endpoints)  
+3. [Installation](#installation)  
+4. [Running the Application](#running-the-application)  
+5. [Deployment](#deployment)  
+6. [Technologies Used](#technologies-used)  
+7. [Contributing](#contributing)  
+8. [License](#license)  
 
-# e2e tests
-$ npm run test:e2e
+---
 
-# test coverage
-$ npm run test:cov
-```
+## Database Design  
 
-## Deployment
+The database consists of the following tables:  
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+1. **Colleges Table**  
+   - `id`: Primary Key  
+   - `name`: Name of the college  
+   - `score`: Ranking score (1–1000)  
+   - `city_id`: Foreign Key to `Cities` table  
+   - `state_id`: Foreign Key to `States` table  
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2. **College_Placement Table**  
+   - `id`: Primary Key  
+   - `college_id`: Foreign Key to `Colleges` table  
+   - `year`: Year of placement data  
+   - `highest_placement`, `average_placement`, `median_placement`, `placement_rate`: Placement statistics  
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+3. **College_Wise_Course Table**  
+   - `id`: Primary Key  
+   - `college_id`: Foreign Key to `Colleges` table  
+   - `course_name`: Name of the course  
+   - `course_duration`: Duration of the course  
+   - `course_fee`: Fee of the course  
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+4. **Cities Table**  
+   - `id`: Primary Key  
+   - `name`: Name of the city  
 
-## Resources
+5. **States Table**  
+   - `id`: Primary Key  
+   - `name`: Name of the state  
 
-Check out a few resources that may come in handy when working with NestJS:
+---
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## API Endpoints  
 
-## Support
+### 1. College Placements Data  
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Endpoint**: `/college_data/{college_id}`  
+- **Features**:  
+  - Returns the average placement data grouped by year.  
+  - Provides placement records with a `placement_trend` field based on placement rate trends (UP/DOWN).  
 
-## Stay in touch
+### 2. College Courses Data  
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- **Endpoint**: `/college_courses/{college_id}`  
+- **Features**:  
+  - Fetches all courses offered by the college, sorted by course fee in descending order.  
 
-## License
+### 3. City and State Filter for Colleges  
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- **Endpoint**: `/colleges`  
+- **Query Parameters**:  
+  - `city`: Retrieve colleges from a specific city.  
+  - `state`: Retrieve colleges from a specific state.  
+
+---
+
+## Installation  
+
+### Prerequisites  
+
+1. Install **Node.js** and **npm**: [Download Node.js](https://nodejs.org/)  
+2. Install **PostgreSQL**: [Download PostgreSQL](https://www.postgresql.org/)  
+
+### Steps  
+
+1. Clone this repository:  
+   ```bash  
+   git clone [<repository-url> ](https://github.com/Riteshkaul/Sports-Dunia.git) 
+   cd college-management  
