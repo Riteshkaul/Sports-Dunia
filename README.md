@@ -104,5 +104,5 @@ The database consists of the following tables:
 
 1. Clone this repository:  
    ```bash  
-   git clone [<repository-url> ](https://github.com/Riteshkaul/Sports-Dunia.git) 
+   git clone https://github.com/Riteshkaul/Sports-Dunia.git
    cd college-management  
